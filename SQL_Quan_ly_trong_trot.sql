@@ -202,4 +202,46 @@ select* from SinhVatGayHai;
 select * from LoaiCoSo;
 
 
+--Bảng tổng hợp các sản phẩm
+select 
+SanPham.ID,
+SanPham.Loai,
+SanPham.Ten,
+LoaiSanPham.Ten as PhanLoai
+from SanPham
+	inner join LoaiSanPham on SanPham.LoaiSanPham_ID = LoaiSanPham.ID;
 
+--Bảng tổng hợp các giống cây chính
+select distinct 
+SanPham.Loai as Giongcaychinh
+from SanPham where SanPham.LoaiSanPham_ID = 1;
+
+
+--Bảng tổng hợp các giống cây trồng lưu hành
+select 
+SanPham.ID,
+SanPham.Loai,
+SanPham.Ten as GiongLuuHanh
+from SanPham
+	inner join LoaiSanPham on SanPham.LoaiSanPham_ID = LoaiSanPham.ID
+where SanPham.LoaiSanPham_ID = 1 ;
+
+
+--Bảng tổng hợp các loại thuốc bảo vệ thực vật
+select 
+SanPham.ID,
+SanPham.Loai,
+SanPham.Ten
+from SanPham
+	inner join LoaiSanPham on SanPham.LoaiSanPham_ID = LoaiSanPham.ID
+where SanPham.LoaiSanPham_ID = 2;
+
+
+--Bảng tổng hợp các loại phân bón
+select 
+SanPham.ID,
+SanPham.Loai,
+SanPham.Ten
+from SanPham
+	inner join LoaiSanPham on SanPham.LoaiSanPham_ID = LoaiSanPham.ID
+where SanPham.LoaiSanPham_ID = 3;
