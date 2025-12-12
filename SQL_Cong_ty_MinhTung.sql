@@ -206,3 +206,5 @@ select s.* , sr.* from SinhVien as s
 inner join SinhVienTC as sr on s.ID = sr.ID
 
 --trả về tất cả  bản ghi cái thuộc tính của bảng bên trái và các bản ghi tương ứng bên phải
+
+
