@@ -34,9 +34,12 @@ create table DonViCoSo(
 	Ten nvarchar(80),
 	DiaChi nvarchar(100),
 	DuDK nvarchar(10),
+	
 	ToaDo varchar(30),
 	VungTrong_ID int foreign key references VungTrong(ID)
 );
+
+sp_rename 'DonViCoSo.DuDK', 'Vietgap' , 'column';
 
 insert into DonViCoSo values
 (N'A', N'Sơn La', N'Có', '21.3283-103.9015', 1),
@@ -211,6 +214,7 @@ LoaiSanPham.Ten as PhanLoai
 from SanPham
 	inner join LoaiSanPham on SanPham.LoaiSanPham_ID = LoaiSanPham.ID;
 
+
 --Bảng tổng hợp các giống cây chính
 select distinct 
 SanPham.Loai as Giongcaychinh
@@ -245,3 +249,99 @@ SanPham.Ten
 from SanPham
 	inner join LoaiSanPham on SanPham.LoaiSanPham_ID = LoaiSanPham.ID
 where SanPham.LoaiSanPham_ID = 3;
+
+	select * from VungTrong
+	select * from DonViCoSo
+	select * from SanPham_CoSo
+	select * from SanPham
+	select * from LoaiSanPham
+
+--Bảng tất cả các đơn vị 
+select
+DonViCoSo.Ten,
+DonViCoSo.DiaChi,
+DonViCoSo.ToaDo,
+VungTrong.Ten as VungTrong,
+VungTrong.QuyMo as QuyMoVungTrong
+from DonViCoSo
+  inner join VungTrong on DonViCoSo.VungTrong_ID = VungTrong.ID;
+ 
+
+--Bảng cơ sở giống cây trồng
+select
+DonViCoSo.Ten,
+DonViCoSo.DiaChi,
+DonViCoSo.ToaDo,
+LoaiSanPham.Ten as LoaiHinh,
+VungTrong.Ten as VungTrong
+from DonViCoSo
+  inner join VungTrong on DonViCoSo.VungTrong_ID = VungTrong.ID
+  inner join SanPham_CoSo on DonViCoSo.ID = SanPham_CoSo.DonViCoSo_ID
+  inner join LoaiSanPham on SanPham_CoSo.LoaiSanPham_ID = LoaiSanPham.ID
+where LoaiSanPham.ID =1;
+
+
+--Bảng cơ sở thuốc bảo vệ thực vật
+select
+DonViCoSo.Ten,
+DonViCoSo.DiaChi,
+DonViCoSo.ToaDo,
+LoaiSanPham.Ten as LoaiHinh,
+VungTrong.Ten as VungTrong
+
+from DonViCoSo
+  inner join VungTrong on DonViCoSo.VungTrong_ID = VungTrong.ID
+  inner join SanPham_CoSo on DonViCoSo.ID = SanPham_CoSo.DonViCoSo_ID
+  inner join LoaiSanPham on SanPham_CoSo.LoaiSanPham_ID = LoaiSanPham.ID
+where LoaiSanPham.ID =2;
+
+
+--Bảng cơ sở phân bón
+select
+DonViCoSo.Ten,
+DonViCoSo.DiaChi,
+DonViCoSo.ToaDo,
+LoaiSanPham.Ten as LoaiHinh,
+VungTrong.Ten as VungTrong
+from DonViCoSo
+  inner join VungTrong on DonViCoSo.VungTrong_ID = VungTrong.ID
+  inner join SanPham_CoSo on DonViCoSo.ID = SanPham_CoSo.DonViCoSo_ID
+  inner join LoaiSanPham on SanPham_CoSo.LoaiSanPham_ID = LoaiSanPham.ID
+where LoaiSanPham.ID =3;
+
+
+--Bảng cơ sở sản xuất trồng trọt
+select
+DonViCoSo.Ten,
+DonViCoSo.DiaChi,
+DonViCoSo.ToaDo,
+LoaiSanPham.Ten as LoaiHinh,
+VungTrong.Ten as VungTrong
+from DonViCoSo
+  inner join VungTrong on DonViCoSo.VungTrong_ID = VungTrong.ID
+  inner join SanPham_CoSo on DonViCoSo.ID = SanPham_CoSo.DonViCoSo_ID
+  inner join LoaiSanPham on SanPham_CoSo.LoaiSanPham_ID = LoaiSanPham.ID
+where LoaiSanPham.ID =4;
+
+
+
+--Bảng cơ sở sản xuất trồng trọt đạt chuẩn VietGap
+select
+DonViCoSo.Ten as CoSoVietGap,
+DonViCoSo.DiaChi,
+DonViCoSo.ToaDo,
+LoaiSanPham.Ten as LoaiHinh,
+VungTrong.Ten as VungTrong
+from DonViCoSo
+  inner join VungTrong on DonViCoSo.VungTrong_ID = VungTrong.ID
+  inner join SanPham_CoSo on DonViCoSo.ID = SanPham_CoSo.DonViCoSo_ID
+  inner join LoaiSanPham on SanPham_CoSo.LoaiSanPham_ID = LoaiSanPham.ID
+where LoaiSanPham.ID =4 and  DonViCoSo.Vietgap like 'c%';
+
+
+select 
+SinhVatGayHai.*,
+VungTrong.Ten as ThuocVung
+from SinhVatGayHai
+	inner join SinhVat_VungTrong on SinhVatGayHai.ID = SinhVat_VungTrong.SinhVat_ID
+	inner join VungTrong on SinhVat_VungTrong.VungTrong_ID = VungTrong.ID
