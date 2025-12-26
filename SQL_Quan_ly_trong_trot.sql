@@ -131,21 +131,19 @@ create table SinhVatGayHai(
 	Ten nvarchar(30),
 	Loai nvarchar(30),
 	MoTa nvarchar(100),
-	MucDoGayHai nvarchar(20)
 );
 
-
 insert into SinhVatGayHai values
-(N'Sâu đục thân', N'Côn trùng', N'Gây hại bằng cách đục vào thân cây lúa và ngô',N'Nặng'),
-(N'Sâu cuốn lá', N'Côn trùng', N'Cuốn lá lại để ăn phần thịt lá, gây giảm khả năng quang hợp',N'Trung bình'),
-(N'Rầy nâu', N'Côn trùng', N'Hút nhựa cây lúa và truyền bệnh vàng lùn, lùn xoắn lá',N'Nhẹ'),
-(N'Nhện đỏ', N'Nhện', N'Gây hại bằng cách chích hút làm lá vàng và khô',N'Nhẹ'),
-(N'Sâu xanh da láng', N'Côn trùng', N'Phá hoại lá và đọt non của nhiều loại cây trồng',N'Nhẹ'),
-(N'Bọ xít muỗi', N'Côn trùng', N'Chích hút làm trái non bị chai sượng hoặc biến dạng',N'Nhẹ'),
-(N'Ruồi vàng', N'Côn trùng', N'Đẻ trứng vào trái cây, làm thối và rụng quả',N'Nặng'),
-(N'Bệnh đạo ôn', N'Nấm', N'Gây đốm cháy lá, cổ bông và cổ gié trên cây lúa',N'Nhẹ'),
-(N'Bệnh khô vằn', N'Nấm', N'Gây vằn nâu trên bẹ lá lúa và nhiều cây trồng khác',N'Nhẹ'),
-(N'Bệnh bạc lá', N'Vi khuẩn', N'Làm lá bị khô trắng, giảm năng suất nghiêm trọng',N'Trung bình');
+(N'Sâu đục thân', N'Côn trùng', N'Gây hại bằng cách đục vào thân cây lúa và ngô'),
+(N'Sâu cuốn lá', N'Côn trùng', N'Cuốn lá lại để ăn phần thịt lá, gây giảm khả năng quang hợp'),
+(N'Rầy nâu', N'Côn trùng', N'Hút nhựa cây lúa và truyền bệnh vàng lùn, lùn xoắn lá'),
+(N'Nhện đỏ', N'Nhện', N'Gây hại bằng cách chích hút làm lá vàng và khô'),
+(N'Sâu xanh da láng', N'Côn trùng', N'Phá hoại lá và đọt non của nhiều loại cây trồng'),
+(N'Bọ xít muỗi', N'Côn trùng', N'Chích hút làm trái non bị chai sượng hoặc biến dạng'),
+(N'Ruồi vàng', N'Côn trùng', N'Đẻ trứng vào trái cây, làm thối và rụng quả'),
+(N'Bệnh đạo ôn', N'Nấm', N'Gây đốm cháy lá, cổ bông và cổ gié trên cây lúa'),
+(N'Bệnh khô vằn', N'Nấm', N'Gây vằn nâu trên bẹ lá lúa và nhiều cây trồng khác'),
+(N'Bệnh bạc lá', N'Vi khuẩn', N'Làm lá bị khô trắng, giảm năng suất nghiêm trọng');
 
 
 
@@ -167,43 +165,23 @@ create table TuoiSau(
 	SinhVat_ID int foreign key references SinhVatGayHai(ID),
 	Tuoi nvarchar(20),
 	DacDiem nvarchar(50),
+	MucDoPhoBien nvarchar(50)
 );
 
 insert into TuoiSau values
-(1, N'Trứng', N'Màu trắng, bám lá'),
-(1, N'Trưởng thành', N'Ăn lá mạnh'),
+(1, N'Trứng', N'Màu trắng, bám lá',N'Phổ biến'),
+(1, N'Trưởng thành', N'Ăn lá mạnh',N'Không phổ biến'),
 
-(2, N'Trứng', N'Đẻ thành ổ dưới lá lúa'),
-(2, N'Trưởng thành', N'Chích hút gây vàng lá'),
+(2, N'Trứng', N'Đẻ thành ổ dưới lá lúa',N'Rất phổ biến'),
+(2, N'Trưởng thành', N'Chích hút gây vàng lá',N'Không phổ biến'),
 
-(4, N'Trứng', N'Bám trên bẹ ngô'),
-(4, N'Trưởng thành', N'Đục thân làm cây đổ');
+(4, N'Trứng', N'Bám trên bẹ ngô',N'Phổ biến'),
+(4, N'Trưởng thành', N'Đục thân làm cây đổ',N'Phổ biến');
 
-
-
-
-select * from TuoiSau;
-
-select* from SinhVatGayHai;
-
-select * from SanPham_CoSo;
-
-select * from Sanpham;
-
-select * from LoaiSanPham;
-
-select * from ChucNangCoSo;
-
-select * from DonViCoSo;
-
-select * from VungTrong;
-
-select* from SinhVatGayHai;
-
-select * from LoaiCoSo;
 
 
 --Bảng tổng hợp các sản phẩm
+create view ViewSanPham as
 select 
 SanPham.ID,
 SanPham.Loai,
@@ -214,12 +192,14 @@ from SanPham
 
 
 --Bảng tổng hợp các giống cây chính
+create view ViewGiongCayChinh as
 select distinct 
 SanPham.Loai as Giongcaychinh
 from SanPham where SanPham.LoaiSanPham_ID = 1;
 
 
 --Bảng tổng hợp các giống cây trồng lưu hành
+create view ViewGiongCayLuuHanh as
 select 
 SanPham.ID,
 SanPham.Loai,
@@ -230,6 +210,7 @@ where SanPham.LoaiSanPham_ID = 1 ;
 
 
 --Bảng tổng hợp các loại thuốc bảo vệ thực vật
+create view ViewTBVTV as
 select 
 SanPham.ID,
 SanPham.Loai,
@@ -240,6 +221,7 @@ where SanPham.LoaiSanPham_ID = 2;
 
 
 --Bảng tổng hợp các loại phân bón
+create view ViewPhanBon as
 select 
 SanPham.ID,
 SanPham.Loai,
@@ -252,6 +234,7 @@ where SanPham.LoaiSanPham_ID = 3;
 
 
 --Bảng tổng hợp các đơn vị cơ sở
+create view ViewCoSo as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -268,6 +251,7 @@ from DonViCoSo
 
 
 --Bảng cơ sở giống cây trồng
+create view ViewCoSoGiongCay as
 select
 DonViCoSo.Ten as VuonCayDauDong,
 DonViCoSo.DiaChi,
@@ -285,6 +269,7 @@ from DonViCoSo
 
 
 --Bảng cơ sở thuốc bảo vệ thực vật
+create view ViewCoSoTBVTV as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -302,6 +287,7 @@ where LoaiSanPham.ID =2;
 
 
 --Bảng cơ sở đủ điều kiện sản xuất thuốc bảo vệ thực vật
+create view ViewCoSoDuDieuKienSanXuatTBVTV as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -319,6 +305,7 @@ where LoaiSanPham.ID =2 and Loaicoso.ID = 1  and  DonViCoSo.DuDK like 'c%' ;
 
 
 --Bảng cơ sở bán thuốc bảo vệ thực vật 
+create view ViewCoSoBanTBVTV as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -336,6 +323,7 @@ where LoaiSanPham.ID =2 and Loaicoso.ID = 2;
 
 
 --Bảng cơ sở phân bón
+create view ViewCoSoPhanBon as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -354,6 +342,7 @@ where LoaiSanPham.ID =3;
 
 
 --Bảng cơ sở đủ điều kiện sản xuất phân bón
+create view ViewCoSoDuDieuKienSanXuatPhanBon as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -371,6 +360,7 @@ where LoaiSanPham.ID =3 and Loaicoso.ID = 1 and DonViCoSo.DuDK like 'c%'
 
 
 --Bảng cơ sở buôn bán phân bón
+create view ViewCoSoBanPhanBon as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -389,6 +379,7 @@ where LoaiSanPham.ID =3 and LoaiCoSo.ID = 2;
 
 
 --Bảng cơ sở sản xuất trồng trọt
+create view ViewCoSoSanXuatTrongTrot as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -406,6 +397,7 @@ where LoaiCoSo.ID = 3
 
 
 --Bảng cơ sở sản xuất trồng trọt đạt chuẩn VietGap
+create view ViewCoSoSanXuatTrongTrotChuanVietGap as
 select
 DonViCoSo.Ten,
 DonViCoSo.DiaChi,
@@ -420,4 +412,45 @@ from DonViCoSo
   inner join LoaiCoSo on ChucNangCoSo.Loai_ID = LoaiCoSo.ID
 where LoaiCoSo.ID = 3 and  DonViCoSo.DuDK like 'c%';
 
-  
+
+
+--Bảng vùng trồng
+create view ViewVungTrong as
+select * from VungTrong;
+
+
+--Bảng sinh vật gây hại
+create view ViewSinhVatGayHai as
+select 
+SinhVatGayHai.ID,
+SinhVatGayHai.Ten,
+SinhVatGayHai.Loai,
+SinhVatGayHai.MoTa,
+VungTrong.Ten as VungTrong
+from SinhVatGayHai
+	inner join SinhVat_VungTrong on SinhVatGayHai.ID = SinhVat_VungTrong.SinhVat_ID
+	inner join VungTrong on SinhVat_VungTrong.VungTrong_ID = VungTrong.ID
+	
+
+--Bảng tuổi sâu , cấp độ phổ biến
+create view ViewTuoiSau_CapDo as
+select 
+SinhVatGayHai.ID,
+SinhVatGayHai.Ten,
+SinhVatGayHai.Loai,
+TuoiSau.Tuoi as TuoiSau,
+TuoiSau.MucDoPhoBien as MucDoPhoBien,
+TuoiSau.DacDiem as DacDiem,
+VungTrong.Ten as VungTrong
+from SinhVatGayHai
+	inner join SinhVat_VungTrong on SinhVatGayHai.ID = SinhVat_VungTrong.SinhVat_ID
+	inner join VungTrong on SinhVat_VungTrong.VungTrong_ID = VungTrong.ID
+	inner join TuoiSau on SinhVatGayHai.ID = TuoiSau.SinhVat_ID
+
+
+create table CapNhat_SVGH(
+	ID int identity primary key,
+	ThoiGian Datetime,
+	TienDo nvarchar(50),
+	SinhVat_ID int foreign key references SinhVatGayHai(ID)
+)
